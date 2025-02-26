@@ -39,16 +39,16 @@ result = response.json()['exercises']
 
 today = datetime.now()
 date = today.strftime('%d/%m/%Y')
-hour = f'{today.hour}:{today.minute}:{today.second}'
+hour = today.strftime('%X')
 
-for index in range(len(result)):
+for exercise in result:
     training_parameters = {
         'workout': {
             'date': date,
             'time': hour,
-            'exercise': result[index]['name'].title(),
-            'duration': result[index]['duration_min'],
-            'calories': result[index]['nf_calories'],
+            'exercise': exercise['name'].title(),
+            'duration': exercise['duration_min'],
+            'calories': exercise['nf_calories'],
         }
     }
     requests.post(SHEET_URL,json=training_parameters)
